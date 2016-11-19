@@ -1,0 +1,65 @@
+{
+  "name": "user",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "subscribe": {
+      "type": "number"
+    },
+    "openid": {
+      "type": "string"
+    },
+    "nickname": {
+      "type": "string"
+    },
+    "sex": {
+      "type": "number"
+    },
+    "city": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "province": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "headimgurl": {
+      "type": "string"
+    },
+    "subscribe_time": {
+      "type": "number"
+    },
+    "unionid": {
+      "type": "string"
+    },
+    "remark": {
+      "type": "string"
+    },
+    "groupid": {
+      "type": "number"
+    },
+    "tagid_list": {
+      "type": [
+        "number"
+      ]
+    },
+    "created": {
+      "type": "date"
+    },
+    "status": {
+      "type": "string",
+      "default": "0"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
