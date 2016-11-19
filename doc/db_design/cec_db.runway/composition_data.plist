@@ -400,7 +400,8 @@
 					MDBcdHg2MTYwXHR4NjcyMFxwYXJkaXJuYXR1
 					cmFsXHBhcnRpZ2h0ZW5mYWN0b3IwCgpcZjBc
 					ZnMyNCBcY2YyIGFjdGl2aXR5Olx7XH1cCnBy
-					aXplClxmMSA6W119
+					aXplcwpcZjEgOltdXAoKXGYwIGNyZWF0ZWRc
+					CnN0YXR1c30=
 					</data>
 					<key>attributedText2Data</key>
 					<data>
@@ -480,7 +481,7 @@
 					<key>fillType</key>
 					<integer>0</integer>
 					<key>frame</key>
-					<string>{{305, 18}, {82, 89}}</string>
+					<string>{{305, 18}, {82, 117}}</string>
 					<key>hidden</key>
 					<false/>
 					<key>identifier</key>
@@ -838,7 +839,7 @@
 					<key>fillType</key>
 					<integer>0</integer>
 					<key>frame</key>
-					<string>{{305, 134}, {99, 142}}</string>
+					<string>{{305, 195}, {99, 142}}</string>
 					<key>hidden</key>
 					<false/>
 					<key>identifier</key>
@@ -985,7 +986,7 @@
 			<key>scaleImage</key>
 			<true/>
 			<key>scrollCenterPoint</key>
-			<string>{297.33333333333331, 420.66666666666663}</string>
+			<string>{297.33333333333331, 372.66666666666663}</string>
 			<key>stroke1Color</key>
 			<string></string>
 			<key>stroke1Enabled</key>
@@ -1070,13 +1071,13 @@
 					MDBcdHg2MTYwXHR4NjcyMFxwYXJkaXJuYXR1
 					cmFsXHBhcnRpZ2h0ZW5mYWN0b3IwCgpcZjBc
 					ZnMyNCBcY2YyIGFjdGl2aXR5Olx7XH1cCm93
-					bmVyOnVzZXJce1x9XApzdXBwb3J0OltcClx7
-					XAp1c2VyOlx7XH1cCml0ZW06XHtcfVwKXH1c
-					Cl1cCnNlbGxlcjpce1x9XApjb250YWN0cwpc
-					ZjEgOlx7XApuYW1lXAptb2JpbGVcCmlkY2Fy
-					ZFwKYWRkcmVzc1wKXH1cCmV4dDpce1x9XAoK
-					XGYwIHByaXplOlx7XH1cCmNyZWF0ZWRcCnN0
-					YXR1c30=
+					bmVyOnVzZXJce1x9XApzdXBwb3J0czpbXApc
+					e1wKdXNlcjpce1x9XAppdGVtOlx7XH1cClx9
+					XApdXApzZWxsZXI6XHtcfVwKY29udGFjdHMK
+					XGYxIDpce1wKbmFtZVwKbW9iaWxlXAppZGNh
+					cmRcCmFkZHJlc3NcClx9XApleHQ6XHtcfVwK
+					ClxmMCBwcml6ZTpce1x9XApjcmVhdGVkXApz
+					dGF0dXN9
 					</data>
 					<key>attributedText2Data</key>
 					<data>

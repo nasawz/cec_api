@@ -1,0 +1,30 @@
+{
+  "name": "lottery",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "activity": {
+      "type": "object",
+      "required": true
+    },
+    "prizes": {
+      "type": [
+        "object"
+      ]
+    },
+    "created": {
+      "type": "date"
+    },
+    "status": {
+      "type": "string",
+      "default": "0"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

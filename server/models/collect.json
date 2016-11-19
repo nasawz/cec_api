@@ -1,0 +1,46 @@
+{
+  "name": "collect",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "activity": {
+      "type": "object",
+      "required": true
+    },
+    "owner": {
+      "type": "object",
+      "required": true
+    },
+    "supports": {
+      "type": [
+        "object"
+      ]
+    },
+    "seller": {
+      "type": "object"
+    },
+    "contacts": {
+      "type": "object"
+    },
+    "prize": {
+      "type": "object"
+    },
+    "ext": {
+      "type": "object"
+    },
+    "created": {
+      "type": "date"
+    },
+    "status": {
+      "type": "string",
+      "default": "0"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

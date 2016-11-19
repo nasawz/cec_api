@@ -31,5 +31,25 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "seller": {
+    "dataSource": "db",
+    "public": true
+  },
+  "activity": {
+    "dataSource": "db",
+    "public": true
+  },
+  "lottery": {
+    "dataSource": "db",
+    "public": true
+  },
+  "lottery_history": {
+    "dataSource": "db",
+    "public": true
+  },
+  "collect": {
+    "dataSource": "db",
+    "public": true
   }
 }

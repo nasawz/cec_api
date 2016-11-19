@@ -1,0 +1,36 @@
+{
+  "name": "activity",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "string"
+    },
+    "start_time": {
+      "type": "date"
+    },
+    "end_time": {
+      "type": "date"
+    },
+    "share": {
+      "type": "object"
+    },
+    "created": {
+      "type": "date"
+    },
+    "status": {
+      "type": "string",
+      "default": "0"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
