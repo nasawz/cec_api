@@ -6,14 +6,6 @@
     "validateUpsert": true
   },
   "properties": {
-    "activity": {
-      "type": "object",
-      "required": true
-    },
-    "owner": {
-      "type": "object",
-      "required": true
-    },
     "supports": {
       "type": [
         "object"
@@ -40,7 +32,18 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "owner": {
+      "type": "belongsTo",
+      "model": "user",
+      "foreignKey": ""
+    },
+    "activity": {
+      "type": "belongsTo",
+      "model": "activity",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }
