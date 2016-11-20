@@ -5,8 +5,8 @@
 
 ## todo
 
-- 梳理整体API路由
-- 对接mongodb
+- [x] 梳理整体API路由
+- [x] 对接mongodb
 - Remote methods 测试
 - 完成用户登录逻辑
 - 基础测试数据导入

@@ -1,6 +1,9 @@
 {
   "db": {
+    "host": "127.0.0.1",
+    "port": 27017,
+    "database": "cec_db",
     "name": "db",
-    "connector": "memory"
+    "connector": "mongodb"
   }
 }
