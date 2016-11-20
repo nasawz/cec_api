@@ -7,7 +7,7 @@
 
 - [x] 梳理整体API路由
 - [x] 对接mongodb
-- Remote methods 测试
+- [x] Remote methods 测试
 - 完成用户登录逻辑
 - 基础测试数据导入
 - 前端接口开发

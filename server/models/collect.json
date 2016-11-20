@@ -45,5 +45,38 @@
     }
   },
   "acls": [],
-  "methods": {}
+  "methods": {
+    "greet": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "msg",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "string",
+          "root": true,
+          "description": ""
+        },
+        {
+          "arg": "hi",
+          "type": "string",
+          "root": false,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/greet",
+          "verb": "get"
+        }
+      ]
+    }
+  }
 }
