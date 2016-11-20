@@ -6,10 +6,6 @@
     "validateUpsert": true
   },
   "properties": {
-    "activity": {
-      "type": "object",
-      "required": true
-    },
     "prizes": {
       "type": [
         "object"
@@ -24,7 +20,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "activity": {
+      "type": "belongsTo",
+      "model": "activity",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

@@ -54,9 +54,9 @@
 					ZFx0eDU2MFx0eDExMjBcdHgxNjgwXHR4MjI0
 					MFx0eDI4MDBcdHgzMzYwXHR4MzkyMFx0eDQ0
 					ODBcdHg1MDQwXHR4NTYwMFx0eDYxNjBcdHg2
-					NzIwXHBhcmRpcm5hdHVyYWxccWNccGFydGln
-					aHRlbmZhY3RvcjAKClxmMFxmczI0IFxjZjIg
-					b3BlcmF0aW9uKCl9
+					NzIwXHBhcmRpcm5hdHVyYWxccGFydGlnaHRl
+					bmZhY3RvcjAKClxmMFxmczI0IFxjZjIgb3Bl
+					cmF0aW9uKCl9
 					</data>
 					<key>attributedText3Data</key>
 					<data>
@@ -119,7 +119,7 @@
 					<key>fillType</key>
 					<integer>0</integer>
 					<key>frame</key>
-					<string>{{41, 18}, {101, 319}}</string>
+					<string>{{39, 25}, {105, 305}}</string>
 					<key>hidden</key>
 					<false/>
 					<key>identifier</key>
@@ -659,7 +659,7 @@
 					<key>fillType</key>
 					<integer>0</integer>
 					<key>frame</key>
-					<string>{{42, 362}, {100, 100}}</string>
+					<string>{{44, 478}, {100, 100}}</string>
 					<key>hidden</key>
 					<false/>
 					<key>identifier</key>
@@ -986,7 +986,7 @@
 			<key>scaleImage</key>
 			<true/>
 			<key>scrollCenterPoint</key>
-			<string>{297.33333333333331, 372.66666666666663}</string>
+			<string>{297.99999999999994, 372.66666666666663}</string>
 			<key>stroke1Color</key>
 			<string></string>
 			<key>stroke1Enabled</key>
@@ -1304,7 +1304,7 @@
 			<key>scaleImage</key>
 			<true/>
 			<key>scrollCenterPoint</key>
-			<string>{293, 279.5}</string>
+			<string>{297.5, 279.5}</string>
 			<key>stroke1Color</key>
 			<string></string>
 			<key>stroke1Enabled</key>
