@@ -1,6 +1,27 @@
 'use strict';
 // var app = require('../../server/server');
 module.exports = function(Collect) {
+  Collect.disableRemoteMethod('create', true); // Removes (POST) /module
+
+  Collect.disableRemoteMethod('find', true);
+  Collect.disableRemoteMethod('findById', true);
+  Collect.disableRemoteMethod('findOne', true);
+  Collect.disableRemoteMethod('count', true);
+  Collect.disableRemoteMethod('exists', true);
+
+
+  Collect.disableRemoteMethod('upsert', true); // Removes (PUT) /module
+  Collect.disableRemoteMethod('updateAll', true); // Removes (POST) /module/update
+  Collect.disableRemoteMethod('updateAttributes', false); // Removes (PUT) /module/:id
+  Collect.disableRemoteMethod('createChangeStream', true); // removes (GET|POST) /module/change-stream
+  Collect.disableRemoteMethod('upsertWithWhere', true);
+  Collect.disableRemoteMethod('replaceOrCreate', true);
+  Collect.disableRemoteMethod('replaceById', true);
+
+  Collect.disableRemoteMethod('deleteById', true); // Removes (DELETE) /module/:id
+
+  Collect.disableRemoteMethod('__get__activity', false);
+  Collect.disableRemoteMethod('__get__owner', false);
   /**
    * 当前登录的所有者抽奖
    * @param {string} cid collect id
