@@ -18,5 +18,4 @@ coverage
 node_modules
 npm-debug.log
 client
-base-data-import.js
 .Archive
