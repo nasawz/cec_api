@@ -122,7 +122,7 @@
 					<key>fillType</key>
 					<integer>0</integer>
 					<key>frame</key>
-					<string>{{39, 15}, {105, 325}}</string>
+					<string>{{39, 30}, {105, 325}}</string>
 					<key>hidden</key>
 					<false/>
 					<key>identifier</key>
@@ -1082,7 +1082,18 @@
 					XGYxIFxjZjIgOlx7XApuYW1lXAptb2JpbGVc
 					CmlkY2FyZFwKYWRkcmVzc1wKXH1cCmV4dDpc
 					e1x9XAoKXGYwIFxjZjIgcHJpemU6XHtcfVwK
-					Y3JlYXRlZFwKc3RhdHVzfQ==
+					XHBhcmRcdHg1NjBcdHgxMTIwXHR4MTY4MFx0
+					eDIyNDBcdHgyODAwXHR4MzM2MFx0eDM5MjBc
+					dHg0NDgwXHR4NTA0MFx0eDU2MDBcdHg2MTYw
+					XHR4NjcyMFxwYXJkaXJuYXR1cmFsXHBhcnRp
+					Z2h0ZW5mYWN0b3IwClxjZjIgY2hhbm5lbApc
+					ZjEgOltcJ2M3XCdmZVwnYjVcJ2MwXQpcZjAg
+					XApccGFyZFx0eDU2MFx0eDExMjBcdHgxNjgw
+					XHR4MjI0MFx0eDI4MDBcdHgzMzYwXHR4Mzky
+					MFx0eDQ0ODBcdHg1MDQwXHR4NTYwMFx0eDYx
+					NjBcdHg2NzIwXHBhcmRpcm5hdHVyYWxccGFy
+					dGlnaHRlbmZhY3RvcjAKXGNmMiBjcmVhdGVk
+					XApzdGF0dXN9
 					</data>
 					<key>attributedText2Data</key>
 					<data>
@@ -1105,19 +1116,10 @@
 					MiBcCnN1cHBvcnQoKQpcZjEgXGNmMiA6XCdk
 					NlwnYTdcJ2IzXCdkNgpcZjAgXGNmMiBcCnBl
 					cm1pdApcZjEgXGNmMiAoKTpcJ2I1XCdlM1wn
-					YzFcJ2MxXApccGFyZFx0eDU2MFx0eDExMjBc
-					dHgxNjgwXHR4MjI0MFx0eDI4MDBcdHgzMzYw
-					XHR4MzkyMFx0eDQ0ODBcdHg1MDQwXHR4NTYw
-					MFx0eDYxNjBcdHg2NzIwXHBhcmRpcm5hdHVy
-					YWxccGFydGlnaHRlbmZhY3RvcjAKClxmMCBc
-					Y2YyIGNvbnRhY3RzClxmMSAoKTpcJ2MxXCdm
-					NFwnZDdcJ2NhXApccGFyZFx0eDU2MFx0eDEx
-					MjBcdHgxNjgwXHR4MjI0MFx0eDI4MDBcdHgz
-					MzYwXHR4MzkyMFx0eDQ0ODBcdHg1MDQwXHR4
-					NTYwMFx0eDYxNjBcdHg2NzIwXHBhcmRpcm5h
-					dHVyYWxccGFydGlnaHRlbmZhY3RvcjAKXGNm
-					MiBcJ2I0XCdiNFwnYmRcJ2E4XCdjYVwnZDVc
-					J2JjXCdhZn0=
+					YzFcJ2MxXAoKXGYwIFxjZjIgY29udGFjdHMK
+					XGYxIFxjZjIgKCk6XCdjMVwnZjRcJ2Q3XCdj
+					YVwKXCdiNFwnYjRcJ2JkXCdhOFwnY2FcJ2Q1
+					XCdiY1wnYWZ9
 					</data>
 					<key>attributedText3Data</key>
 					<data>
@@ -1327,7 +1329,7 @@
 			<key>scaleImage</key>
 			<true/>
 			<key>scrollCenterPoint</key>
-			<string>{297.5, 279.5}</string>
+			<string>{302, 279.5}</string>
 			<key>stroke1Color</key>
 			<string></string>
 			<key>stroke1Enabled</key>

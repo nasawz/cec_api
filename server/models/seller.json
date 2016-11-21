@@ -26,5 +26,32 @@
   "validations": [],
   "relations": {},
   "acls": [],
-  "methods": {}
+  "methods": {
+    "auth": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "code",
+          "type": "string",
+          "required": true,
+          "description": "经销店编码"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "认证经销店",
+      "http": [
+        {
+          "path": "/auth",
+          "verb": "post"
+        }
+      ]
+    }
+  }
 }
