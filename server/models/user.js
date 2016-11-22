@@ -1,5 +1,7 @@
 'use strict';
 
+var request = require('superagent')
+
 module.exports = function(User) {
   User.disableRemoteMethod('create', true);
   User.disableRemoteMethod('upsert', true);
@@ -40,11 +42,36 @@ module.exports = function(User) {
    * @param {Function(Error, object)} callback
    */
   User.auth = function(access_token, openid, callback) {
-    var result = {
-      result: 'succ'
-    };
-    // TODO
-    callback(null, result);
+    console.log(access_token, openid);
+    var req = request.get("http://auth.vkeve.com/userinfo?access_token=" + access_token + "&openid=" + openid)
+    req.timeout(10000)
+    req.end((err, res) => {
+      if (err) {
+        callback(err, null);
+      }
+      var user = res.body
+      user.email = res.body.openid + '@toyota.io'
+      user.password = res.body.openid
+      User.findOrCreate(user, (err, u) => {
+        var TWO_WEEKS = 60 * 60 * 24 * 7 * 2;
+        User.login({
+          email: u.email, // must provide email or "username"
+          password: u.openid, // required by default
+          ttl: TWO_WEEKS // keep the AccessToken alive for at least two weeks
+        }, 'user', function(err, accessToken) {
+          if (err) {
+            callback(err, null);
+          }
+          //   console.log(err);
+          //   console.log(accessToken);
+          //   console.log(accessToken.id); // => GOkZRwg... the access token
+          //   console.log(accessToken.ttl); // => 1209600 time to live
+          //   console.log(accessToken.created); // => 2013-12-20T21:10:20.377Z
+          //   console.log(accessToken.userId); // => 1
+          callback(null, accessToken);
+        });
+      })
+    })
   };
 
 };
