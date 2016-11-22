@@ -24,7 +24,7 @@ module.exports = function(Seller) {
    * @param {string} code 经销店编码
    * @param {Function(Error, object)} callback
    */
-  Seller.auth = function(code, callback) {
+  Seller.certification = function(code, callback) {
     var result = {
       result: 'succ'
     };

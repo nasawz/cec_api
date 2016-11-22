@@ -34,6 +34,35 @@ module.exports = function(User) {
 
   User.disableRemoteMethod('login', true);
 
+  /**
+   * 根据 access token 获取用户资料
+   * @param {string} access_token
+   * @param {Function(Error, object)} callback
+   */
+  User.info = function(access_token, callback) {
+    //   var app = app.models.Book;
+    var AccessToken = User.app.models.AccessToken;
+    // console.log(AccessToken);
+    AccessToken.findOne({
+      where: {
+        id: access_token
+      }
+    }, (err, at) => {
+      if (err||!at) {
+        return callback(new Error('登录超时，请重新登录'), null);
+      }
+      User.findOne({
+        where: {
+          id: at.userId
+        }
+      }, (err, u) => {
+        if (err) {
+          return callback(err, null);
+        }
+        return callback(null, u);
+      })
+    })
+  };
 
   /**
    * 登录认证
@@ -47,10 +76,10 @@ module.exports = function(User) {
     req.timeout(10000)
     req.end((err, res) => {
       if (err) {
-        callback(err, null);
+        return callback(err, null);
       }
       var user = res.body
-      user.email = res.body.openid + '@toyota.io'
+      user.email = res.body.openid + '@cec.io'
       user.password = res.body.openid
       User.findOrCreate(user, (err, u) => {
         var TWO_WEEKS = 60 * 60 * 24 * 7 * 2;
@@ -60,7 +89,7 @@ module.exports = function(User) {
           ttl: TWO_WEEKS // keep the AccessToken alive for at least two weeks
         }, 'user', function(err, accessToken) {
           if (err) {
-            callback(err, null);
+            return callback(err, null);
           }
           //   console.log(err);
           //   console.log(accessToken);
@@ -68,7 +97,7 @@ module.exports = function(User) {
           //   console.log(accessToken.ttl); // => 1209600 time to live
           //   console.log(accessToken.created); // => 2013-12-20T21:10:20.377Z
           //   console.log(accessToken.userId); // => 1
-          callback(null, accessToken);
+          return callback(null, accessToken);
         });
       })
     })

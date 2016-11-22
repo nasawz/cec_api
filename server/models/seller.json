@@ -27,7 +27,7 @@
   "relations": {},
   "acls": [],
   "methods": {
-    "auth": {
+    "certification": {
       "isStatic": true,
       "accepts": [
         {
@@ -48,7 +48,7 @@
       "description": "认证经销店",
       "http": [
         {
-          "path": "/auth",
+          "path": "/certification",
           "verb": "post"
         }
       ]

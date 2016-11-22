@@ -52,7 +52,7 @@
     },
     "created": {
       "type": "date",
-      "defaultFn":"now"
+      "defaultFn": "now"
     },
     "status": {
       "type": "string",
@@ -65,9 +65,16 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "$unauthenticated",
+      "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "auth"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "info"
     }
   ],
   "methods": {
@@ -104,6 +111,32 @@
         {
           "path": "/auth",
           "verb": "get"
+        }
+      ]
+    },
+    "info": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "access_token",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "根据 access token 获取用户资料",
+      "http": [
+        {
+          "path": "/info",
+          "verb": "post"
         }
       ]
     }
