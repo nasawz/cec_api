@@ -61,5 +61,38 @@
   "validations": [],
   "relations": {},
   "acls": [],
-  "methods": {}
+  "methods": {
+    "auth": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "access_token",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "arg": "openid",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "登录认证",
+      "http": [
+        {
+          "path": "/auth",
+          "verb": "post"
+        }
+      ]
+    }
+  }
 }

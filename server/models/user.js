@@ -30,4 +30,21 @@ module.exports = function(User) {
   User.disableRemoteMethod('replaceOrCreate', true);
   User.disableRemoteMethod('replaceById', true);
 
+  User.disableRemoteMethod('login', true);
+
+
+  /**
+   * 登录认证
+   * @param {string} access_token
+   * @param {string} openid
+   * @param {Function(Error, object)} callback
+   */
+  User.auth = function(access_token, openid, callback) {
+    var result = {
+      result: 'succ'
+    };
+    // TODO
+    callback(null, result);
+  };
+
 };
