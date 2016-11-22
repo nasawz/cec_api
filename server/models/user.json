@@ -60,7 +60,15 @@
   },
   "validations": [],
   "relations": {},
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "auth"
+    }
+  ],
   "methods": {
     "auth": {
       "isStatic": true,
@@ -86,11 +94,15 @@
           "description": ""
         }
       ],
-      "description": "登录认证",
+      "description": "",
       "http": [
         {
           "path": "/auth",
           "verb": "post"
+        },
+        {
+          "path": "/auth",
+          "verb": "get"
         }
       ]
     }
