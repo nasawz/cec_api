@@ -40,6 +40,14 @@ module.exports = function(User) {
    * @param {Function(Error, object)} callback
    */
   User.info = function(access_token, callback) {
+
+// Report.findById({
+//   id: 1,
+//   filter: {
+//     include: 'lineitems'
+//   }
+// });
+
     //   var app = app.models.Book;
     var AccessToken = User.app.models.AccessToken;
     // console.log(AccessToken);
@@ -98,6 +106,7 @@ module.exports = function(User) {
           //   console.log(accessToken.created); // => 2013-12-20T21:10:20.377Z
           //   console.log(accessToken.userId); // => 1
           return callback(null, accessToken);
+        //   cb(null, stream, 'application/octet-stream');
         });
       })
     })
