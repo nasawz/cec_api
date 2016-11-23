@@ -1,4 +1,5 @@
 'use strict';
+var LoopBackContext = require('loopback-context');
 // var app = require('../../server/server');
 module.exports = function(Collect) {
   Collect.disableRemoteMethod('create', true); // Removes (POST) /module
@@ -31,6 +32,10 @@ module.exports = function(Collect) {
     var result = {
       result: 'succ'
     };
+
+    var ctx = LoopBackContext.getCurrentContext();
+    var currentUser = ctx && ctx.get('currentUser');
+    console.log('currentUser: ', currentUser); // voila!
     // TODO
     callback(null, result);
   };
