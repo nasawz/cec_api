@@ -41,12 +41,12 @@ module.exports = function(User) {
    */
   User.info = function(access_token, callback) {
 
-// Report.findById({
-//   id: 1,
-//   filter: {
-//     include: 'lineitems'
-//   }
-// });
+    // Report.findById({
+    //   id: 1,
+    //   filter: {
+    //     include: 'lineitems'
+    //   }
+    // });
 
     //   var app = app.models.Book;
     var AccessToken = User.app.models.AccessToken;
@@ -56,7 +56,7 @@ module.exports = function(User) {
         id: access_token
       }
     }, (err, at) => {
-      if (err||!at) {
+      if (err || !at) {
         return callback(new Error('登录超时，请重新登录'), null);
       }
       User.findOne({
@@ -78,37 +78,46 @@ module.exports = function(User) {
    * @param {string} openid
    * @param {Function(Error, object)} callback
    */
-  User.auth = function(access_token, openid, callback) {
-    console.log(access_token, openid);
-    var req = request.get("http://auth.vkeve.com/userinfo?access_token=" + access_token + "&openid=" + openid)
-    req.timeout(10000)
-    req.end((err, res) => {
+  User.auth = function(access_token, openid, tenantId, callback) {
+    var Tenant = User.app.models.tenant;
+    Tenant.findOne({
+      id: tenantId
+    }, function(err, tenant) {
       if (err) {
         return callback(err, null);
       }
-      var user = res.body
-      user.email = res.body.openid + '@cec.io'
-      user.password = res.body.openid
-      User.findOrCreate(user, (err, u) => {
-        var TWO_WEEKS = 60 * 60 * 24 * 7 * 2;
-        User.login({
-          email: u.email, // must provide email or "username"
-          password: u.openid, // required by default
-          ttl: TWO_WEEKS // keep the AccessToken alive for at least two weeks
-        }, 'user', function(err, accessToken) {
-          if (err) {
-            return callback(err, null);
-          }
-          //   console.log(err);
-          //   console.log(accessToken);
-          //   console.log(accessToken.id); // => GOkZRwg... the access token
-          //   console.log(accessToken.ttl); // => 1209600 time to live
-          //   console.log(accessToken.created); // => 2013-12-20T21:10:20.377Z
-          //   console.log(accessToken.userId); // => 1
-          return callback(null, accessToken);
-        //   cb(null, stream, 'application/octet-stream');
-        });
+      var req = request.get("http://auth.vkeve.com/userinfo?access_token=" + access_token + "&openid=" + openid)
+      req.timeout(10000)
+      req.end((err, res) => {
+        if (err) {
+          return callback(err, null);
+        }
+        var user = res.body
+        user.email = res.body.openid + '@' + tenant.ename + '.io'
+        user.password = res.body.openid
+        user.tenant = tenant
+        User.findOrCreate(user, (err, u) => {
+          var TWO_WEEKS = 60 * 60 * 24 * 7 * 2;
+          User.login({
+            email: u.email,
+            password: u.openid,
+            ttl: TWO_WEEKS
+          }, 'user', function(err, accessToken) {
+            if (err) {
+              return callback(err, null);
+            }
+            //   console.log(err);
+            //   console.log(accessToken);
+            //   console.log(accessToken.id); // => GOkZRwg... the access token
+            //   console.log(accessToken.ttl); // => 1209600 time to live
+            //   console.log(accessToken.created); // => 2013-12-20T21:10:20.377Z
+            //   console.log(accessToken.userId); // => 1
+            return callback(null, accessToken);
+            //   cb(null, stream, 'application/octet-stream');
+          });
+        })
       })
+
     })
   };
 

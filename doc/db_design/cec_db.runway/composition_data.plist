@@ -222,8 +222,8 @@
 					bmZhY3RvcjAKClxmMFxmczI0IFxjZjIgdGl0
 					bGVcCmRlc2NcCnN0YXJ0X3RpbWVcCmVuZF90
 					aW1lXApzaGFyZTpce1wKdGl0bGVcCmRlc2Nc
-					CnVybFwKaW1nXApcfVwKY3JlYXRlZFwKc3Rh
-					dHVzfQ==
+					CnVybFwKaW1nXApcfVwKdHlwZVwKY3JlYXRl
+					ZFwKc3RhdHVzfQ==
 					</data>
 					<key>attributedText2Data</key>
 					<data>
@@ -942,7 +942,8 @@
 					ODBcdHg1MDQwXHR4NTYwMFx0eDYxNjBcdHg2
 					NzIwXHBhcmRpcm5hdHVyYWxccGFydGlnaHRl
 					bmZhY3RvcjAKClxmMFxmczI0IFxjZjIgXHVw
-					MCBuYW1lXApjcmVhdGVkXApzdGF0dXN9
+					MCBuYW1lXAplbmFtZVwKY3JlYXRlZFwKc3Rh
+					dHVzfQ==
 					</data>
 					<key>attributedText2Data</key>
 					<data>
@@ -1169,7 +1170,7 @@
 			<key>scaleImage</key>
 			<true/>
 			<key>scrollCenterPoint</key>
-			<string>{297.99999999999994, 372.66666666666663}</string>
+			<string>{297.33333333333331, 372.66666666666663}</string>
 			<key>stroke1Color</key>
 			<string></string>
 			<key>stroke1Enabled</key>

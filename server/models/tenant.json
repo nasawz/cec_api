@@ -10,8 +10,13 @@
       "type": "string",
       "required": true
     },
+    "ename": {
+      "type": "string",
+      "required": true
+    },
     "created": {
-      "type": "date"
+      "type": "date",
+      "defaultFn": "now"
     },
     "status": {
       "type": "string",

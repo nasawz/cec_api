@@ -98,6 +98,12 @@
           "type": "string",
           "required": true,
           "description": ""
+        },
+        {
+          "arg": "tenantId",
+          "type": "string",
+          "required": true,
+          "description": "租户id"
         }
       ],
       "returns": [

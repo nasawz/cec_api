@@ -22,7 +22,8 @@
       "type": "object"
     },
     "created": {
-      "type": "date"
+      "type": "date",
+      "defaultFn": "now"
     },
     "status": {
       "type": "string",
