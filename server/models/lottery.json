@@ -25,6 +25,11 @@
       "type": "belongsTo",
       "model": "activity",
       "foreignKey": ""
+    },
+    "tenant": {
+      "type": "belongsTo",
+      "model": "tenant",
+      "foreignKey": ""
     }
   },
   "acls": [],

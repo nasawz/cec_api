@@ -30,7 +30,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "tenant": {
+      "type": "belongsTo",
+      "model": "tenant",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

@@ -60,7 +60,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "tenant": {
+      "type": "belongsTo",
+      "model": "tenant",
+      "foreignKey": ""
+    }
+  },
   "acls": [
     {
       "accessType": "EXECUTE",

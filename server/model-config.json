@@ -56,5 +56,9 @@
   "user": {
     "dataSource": "db",
     "public": true
+  },
+  "tenant": {
+    "dataSource": "db",
+    "public": false
   }
 }
