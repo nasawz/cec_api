@@ -19,6 +19,9 @@ module.exports = function(Seller) {
   Seller.disableRemoteMethod('replaceById', true);
 
   Seller.disableRemoteMethod('deleteById', true); // Removes (DELETE) /module/:id
+
+  Seller.disableRemoteMethod('__get__tenant', false);
+
   /**
    * 认证经销店
    * @param {string} code 经销店编码

@@ -21,4 +21,6 @@ module.exports = function(Lottery) {
   Lottery.disableRemoteMethod('deleteById', true); // Removes (DELETE) /module/:id
 
   Lottery.disableRemoteMethod('__get__activity', false);
+
+  Lottery.disableRemoteMethod('__get__tenant', false);
 };

@@ -20,5 +20,5 @@ module.exports = function(Activity) {
 
   Activity.disableRemoteMethod('deleteById', true); // Removes (DELETE) /module/:id
 
-
+  Activity.disableRemoteMethod('__get__tenant', false);
 };

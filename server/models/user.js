@@ -32,6 +32,8 @@ module.exports = function(User) {
   User.disableRemoteMethod('replaceOrCreate', true);
   User.disableRemoteMethod('replaceById', true);
 
+  User.disableRemoteMethod('__get__tenant', false);
+
   User.disableRemoteMethod('login', true);
 
   /**
