@@ -9,9 +9,6 @@
     "prize": {
       "type": "object"
     },
-    "seller": {
-      "type": "object"
-    },
     "created": {
       "type": "date",
       "defaultFn": "now"

@@ -3,6 +3,9 @@ var LoopBackContext = require('loopback-context');
 var _ = require('lodash');
 var updateUserChannel = require('./helper/').updateUserChannel
 var updateUserContacts = require('./helper/').updateUserContacts
+var userLottery = require('./helper/').userLottery
+var costPrize = require('./helper/').costPrize
+var recordLotteryHistory = require('./helper/').recordLotteryHistory
 // var app = require('../../server/server');
 module.exports = function(Collect) {
   Collect.disableRemoteMethod('create', true); // Removes (POST) /module
@@ -30,16 +33,63 @@ module.exports = function(Collect) {
    * @param {string} cid collect id
    * @param {Function(Error, object)} callback
    */
-  Collect.lottery = function(cid, callback) {
-    var result = {
-      result: 'succ'
-    };
-
+  Collect.lottery = function(cid, aid, callback) {
     var ctx = LoopBackContext.getCurrentContext();
     var currentUser = ctx && ctx.get('currentUser');
-    console.log('currentUser: ', currentUser); // voila!
-    // TODO
-    callback(null, result);
+    if (!currentUser) {
+      return callback(new Error('用户未登陆'), null);
+    }
+    Collect.findOne({
+      id: cid
+    }, function(err, collent) {
+      if (err || collent == null) {
+        var _err = err
+          ? err
+          : new Error('未找到活动')
+        return callback(_err, null);
+      }
+      if (collent.supports.length < 5) {
+        return callback(new Error('参与条件未达成'), null);
+      }
+      if (collent.ownerId.toString() != currentUser.id.toString()) {
+        return callback(new Error('不是自己发起的活动'), null);
+      }
+      if (collent.status == '3') {
+        return callback(new Error('用户已抽奖'), null);
+      }
+      if (collent.status != '2') {
+        return callback(new Error('用户未留资'), null);
+      }
+      userLottery(currentUser, aid, function(err, prize) {
+        if (err) {
+          return callback(err, null);
+        }
+        costPrize(currentUser, aid, prize, function(err, result) {
+          if (err) {
+            return callback(err, null);
+          }
+          if (result) {
+            var _prize = prize
+              ? {
+                name: prize.name
+              }
+              : {
+                name: '未中奖'
+              }
+            collent.updateAttributes({
+              prize: _prize,
+              status: '3'
+            }, function(err, _collent) {
+              if (err) {
+                return callback(err, null);
+              }
+              recordLotteryHistory(aid, currentUser, prize)
+              return callback(null, _collent, 'application/json');
+            })
+          }
+        })
+      })
+    })
   };
 
   /**
