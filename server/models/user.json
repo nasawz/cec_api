@@ -50,6 +50,9 @@
         "number"
       ]
     },
+    "contacts": {
+      "type": "object"
+    },
     "created": {
       "type": "date",
       "defaultFn": "now"

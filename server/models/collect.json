@@ -14,6 +14,9 @@
     "seller": {
       "type": "object"
     },
+    "code": {
+      "type": "string"
+    },
     "contacts": {
       "type": "object"
     },

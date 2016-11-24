@@ -7,12 +7,27 @@ var _ = require('lodash');
 * @param  {type} channel description
 * @return {type}         description
 */
-function updateUserChannel(currentUser, channel) {
-  var channels = currentUser.channels
-    ? currentUser.channels
+function updateUserChannel(user, channel) {
+  var channels = user.channels
+    ? user.channels
     : []
   channels = _.union(channels, [channel]);
-  currentUser.updateAttributes({channels: channels})
+  user.updateAttributes({channels: channels})
+}
+
+
+/**
+ * updateUserContacts - 更新用户的联系信息
+ *
+ * @param  {type} user     description
+ * @param  {type} contacts description
+ * @return {type}          description
+ */
+function updateUserContacts(user, contacts) {
+  var _contacts = user.contacts
+  _contacts = _.merge({}, _contacts, contacts)
+  user.updateAttributes({contacts: _contacts})
 }
 
 module.exports.updateUserChannel = updateUserChannel
+module.exports.updateUserContacts = updateUserContacts
