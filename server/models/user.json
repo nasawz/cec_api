@@ -57,6 +57,11 @@
     "status": {
       "type": "string",
       "default": "0"
+    },
+    "channels": {
+      "type": [
+        "string"
+      ]
     }
   },
   "validations": [],

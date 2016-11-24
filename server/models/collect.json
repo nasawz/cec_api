@@ -84,6 +84,12 @@
           "type": "string",
           "required": true,
           "description": "collect id"
+        },
+        {
+          "arg": "data",
+          "type": "object",
+          "required": true,
+          "description": ""
         }
       ],
       "returns": [
@@ -174,6 +180,12 @@
           "type": "string",
           "required": false,
           "description": "渠道"
+        },
+        {
+          "arg": "activityId",
+          "type": "string",
+          "required": true,
+          "description": "活动"
         }
       ],
       "returns": [

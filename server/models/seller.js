@@ -28,10 +28,12 @@ module.exports = function(Seller) {
    * @param {Function(Error, object)} callback
    */
   Seller.certification = function(code, callback) {
-    var result = {
-      result: 'succ'
-    };
-    // TODO
-    callback(null, result);
+      Seller.findOne({where:{code:code}},function(err, seller){
+          if (err || seller==null) {
+              var _err = err?err:new Error('未找到经销商')
+              return callback(_err, null);
+          }
+          callback(null, seller,'application/json');
+      })
   };
 };

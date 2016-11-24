@@ -1,5 +1,7 @@
 'use strict';
 var LoopBackContext = require('loopback-context');
+var _ = require('lodash');
+var updateUserChannel = require('./helper/').updateUserChannel
 // var app = require('../../server/server');
 module.exports = function(Collect) {
   Collect.disableRemoteMethod('create', true); // Removes (POST) /module
@@ -9,7 +11,6 @@ module.exports = function(Collect) {
   Collect.disableRemoteMethod('findOne', true);
   Collect.disableRemoteMethod('count', true);
   Collect.disableRemoteMethod('exists', true);
-
 
   Collect.disableRemoteMethod('upsert', true); // Removes (PUT) /module
   Collect.disableRemoteMethod('updateAll', true); // Removes (POST) /module/update
@@ -45,12 +46,52 @@ module.exports = function(Collect) {
    * @param {string} cid collect id
    * @param {Function(Error, object)} callback
    */
-  Collect.support = function(cid, callback) {
-    var result = {
-      result: 'succ'
-    };
-    // TODO
-    callback(null, result);
+  Collect.support = function(cid, data, callback) {
+    var ctx = LoopBackContext.getCurrentContext();
+    var currentUser = ctx && ctx.get('currentUser');
+    if (!currentUser) {
+      return callback(new Error('用户未登陆'), null);
+    }
+    Collect.findOne({
+      id: cid
+    }, function(err, collent) {
+      if (err || collent == null) {
+        var _err = err
+          ? err
+          : new Error('未找到活动')
+        return callback(_err, null);
+      }
+      if (collent.ownerId.toString() == currentUser.id.toString()) {
+        return callback(new Error('邀请好友来帮忙吧'), null);
+      }
+      data.user = {
+        openid: currentUser.openid,
+        nickname: currentUser.nickname,
+        headimgurl: currentUser.headimgurl,
+        id: currentUser.id
+      }
+      data.openid = currentUser.openid
+      data.created = new Date()
+      var supports = collent.supports
+        ? collent.supports
+        : []
+      if (supports.length >= 5) {
+        return callback(new Error('好友已经达成条件了'), null);
+      }
+      var _supports = _.keyBy(supports, 'openid')
+      if (_.has(_supports, data.openid)) {
+        return callback(new Error('你已经帮助过了'), null);
+      }
+      supports.push(data)
+      collent.updateAttributes({
+        supports: supports
+      }, function(err, _collent) {
+        if (err) {
+          return callback(err, null);
+        }
+        return callback(null, _collent, 'application/json');
+      })
+    })
   };
 
   /**
@@ -66,7 +107,6 @@ module.exports = function(Collect) {
     // TODO
     callback(null, result);
   };
-
 
   /**
    * 当前登录用户留资
@@ -87,12 +127,35 @@ module.exports = function(Collect) {
    * @param {string} channel 渠道
    * @param {Function(Error, object)} callback
    */
-  Collect.join = function(channel, callback) {
-    var result = {
-      result: 'succ'
-    };
-    // TODO
-    callback(null, result);
+  Collect.join = function(channel, activityId, callback) {
+    var ctx = LoopBackContext.getCurrentContext();
+    var currentUser = ctx && ctx.get('currentUser');
+    var Activity = Collect.app.models.activity;
+    Activity.findOne({
+      id: activityId
+    }, function(err, activity) {
+      if (err || activity == null) {
+        var _err = err
+          ? err
+          : new Error('未找到活动')
+        return callback(_err, null);
+      }
+      Collect.findOrCreate({
+        where: {
+          ownerId: currentUser.id
+        }
+      }, {
+        owner: currentUser,
+        activity: activity,
+        channel: channel
+      }, function(err, collect) {
+        if (err) {
+          return callback(err, null);
+        }
+        updateUserChannel(currentUser, channel)
+        callback(null, collect, 'application/json');
+      })
+    })
   };
 
 };

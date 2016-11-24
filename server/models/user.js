@@ -69,7 +69,7 @@ module.exports = function(User) {
         if (err) {
           return callback(err, null);
         }
-        return callback(null, u);
+        return callback(null, u,'application/json');
       })
     })
   };
@@ -98,7 +98,7 @@ module.exports = function(User) {
         user.email = res.body.openid + '@' + tenant.ename + '.io'
         user.password = res.body.openid
         user.tenant = tenant
-        User.findOrCreate(user, (err, u) => {
+        User.findOrCreate({where:{openid:openid}},user, (err, u) => {
           var TWO_WEEKS = 60 * 60 * 24 * 7 * 2;
           User.login({
             email: u.email,
@@ -114,7 +114,7 @@ module.exports = function(User) {
             //   console.log(accessToken.ttl); // => 1209600 time to live
             //   console.log(accessToken.created); // => 2013-12-20T21:10:20.377Z
             //   console.log(accessToken.userId); // => 1
-            return callback(null, accessToken);
+            return callback(null, accessToken,'application/json');
             //   cb(null, stream, 'application/octet-stream');
           });
         })
