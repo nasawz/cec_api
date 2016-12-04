@@ -69,7 +69,7 @@ module.exports = function(User) {
         if (err) {
           return callback(err, null);
         }
-        return callback(null, u,'application/json');
+        return callback(null, u, 'application/json');
       })
     })
   };
@@ -88,18 +88,13 @@ module.exports = function(User) {
       if (err) {
         return callback(err, null);
       }
-      var req = request.get("http://auth.vkeve.com/userinfo?access_token=" + access_token + "&openid=" + openid)
-      req.timeout(10000)
-      req.end((err, res) => {
-        if (err) {
-          return callback(err, null);
+      User.findOne({
+        where: {
+          openid: openid
         }
-        var user = res.body
-        user.email = res.body.openid + '@' + tenant.ename + '.io'
-        user.password = res.body.openid
-        user.tenant = tenant
-        User.findOrCreate({where:{openid:openid}},user, (err, u) => {
-          var TWO_WEEKS = 60 * 60 * 24 * 7 * 2;
+      }, (err, u) => {
+        if (u) {
+          var TWO_WEEKS = 60 * 60 * 24 * 7 * 20;
           User.login({
             email: u.email,
             password: u.openid,
@@ -108,16 +103,46 @@ module.exports = function(User) {
             if (err) {
               return callback(err, null);
             }
-            //   console.log(err);
-            //   console.log(accessToken);
-            //   console.log(accessToken.id); // => GOkZRwg... the access token
-            //   console.log(accessToken.ttl); // => 1209600 time to live
-            //   console.log(accessToken.created); // => 2013-12-20T21:10:20.377Z
-            //   console.log(accessToken.userId); // => 1
-            return callback(null, accessToken,'application/json');
-            //   cb(null, stream, 'application/octet-stream');
+            return callback(null, accessToken, 'application/json');
           });
-        })
+        } else {
+          var req = request.get("http://auth.vkeve.com/userinfo?access_token=" + access_token + "&openid=" + openid)
+          req.timeout(100000)
+          req.end((err, res) => {
+            if (err) {
+              return callback(err, null);
+            }
+            var user = res.body
+            user.email = res.body.openid + '@' + tenant.ename + '.io'
+            user.password = res.body.openid
+            user.tenant = tenant
+            User.findOrCreate({
+              where: {
+                openid: openid
+              }
+            }, user, (err, u) => {
+              var TWO_WEEKS = 60 * 60 * 24 * 7 * 20;
+              User.login({
+                email: u.email,
+                password: u.openid,
+                ttl: TWO_WEEKS
+              }, 'user', function(err, accessToken) {
+                if (err) {
+                  return callback(err, null);
+                }
+                //   console.log(err);
+                //   console.log(accessToken);
+                //   console.log(accessToken.id); // => GOkZRwg... the access token
+                //   console.log(accessToken.ttl); // => 1209600 time to live
+                //   console.log(accessToken.created); // => 2013-12-20T21:10:20.377Z
+                //   console.log(accessToken.userId); // => 1
+                return callback(null, accessToken, 'application/json');
+                //   cb(null, stream, 'application/octet-stream');
+              });
+            })
+          })
+
+        }
       })
 
     })

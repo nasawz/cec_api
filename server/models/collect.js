@@ -40,7 +40,9 @@ module.exports = function(Collect) {
       return callback(new Error('用户未登陆'), null);
     }
     Collect.findOne({
-      id: cid
+      where: {
+        id: cid
+      }
     }, function(err, collent) {
       if (err || collent == null) {
         var _err = err
@@ -104,7 +106,9 @@ module.exports = function(Collect) {
       return callback(new Error('用户未登陆'), null);
     }
     Collect.findOne({
-      id: cid
+      where: {
+        id: cid
+      }
     }, function(err, collent) {
       if (err || collent == null) {
         var _err = err
@@ -154,7 +158,9 @@ module.exports = function(Collect) {
   Collect.permit = function(cid, code, callback) {
     var Seller = Collect.app.models.seller;
     Collect.findOne({
-      id: cid
+      where: {
+        id: cid
+      }
     }, function(err, collent) {
       if (err || collent == null) {
         var _err = err
@@ -175,7 +181,9 @@ module.exports = function(Collect) {
         return callback(new Error('客户已抽奖'), null);
       }
       Seller.findOne({
-        code: code
+        where: {
+          code: code
+        }
       }, function(err, seller) {
         if (err || seller == null) {
           var _err = err
@@ -212,7 +220,9 @@ module.exports = function(Collect) {
     }
 
     Collect.findOne({
-      id: cid
+      where: {
+        id: cid
+      }
     }, function(err, collent) {
       if (err || collent == null) {
         var _err = err
@@ -253,9 +263,14 @@ module.exports = function(Collect) {
   Collect.join = function(channel, activityId, callback) {
     var ctx = LoopBackContext.getCurrentContext();
     var currentUser = ctx && ctx.get('currentUser');
+    if (!currentUser) {
+      return callback(new Error('用户未登陆'), null);
+    }
     var Activity = Collect.app.models.activity;
     Activity.findOne({
-      id: activityId
+      where: {
+        id: activityId
+      }
     }, function(err, activity) {
       if (err || activity == null) {
         var _err = err
