@@ -17,6 +17,9 @@
     "code": {
       "type": "string"
     },
+    "openid": {
+      "type": "string"
+    },
     "contacts": {
       "type": "object"
     },

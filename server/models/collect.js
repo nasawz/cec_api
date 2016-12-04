@@ -284,6 +284,7 @@ module.exports = function(Collect) {
         }
       }, {
         owner: currentUser,
+        openid: currentUser.openid,
         activity: activity,
         channel: channel
       }, function(err, collect) {
