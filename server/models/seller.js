@@ -1,5 +1,9 @@
 'use strict';
 
+var LoopBackContext = require('loopback-context');
+var _ = require('lodash');
+var updateUserSeller = require('./helper/').updateUserSeller
+
 module.exports = function(Seller) {
   Seller.disableRemoteMethod('create', true); // Removes (POST) /module
 
@@ -8,7 +12,6 @@ module.exports = function(Seller) {
   Seller.disableRemoteMethod('findOne', true);
   Seller.disableRemoteMethod('count', true);
   Seller.disableRemoteMethod('exists', true);
-
 
   Seller.disableRemoteMethod('upsert', true); // Removes (PUT) /module
   Seller.disableRemoteMethod('updateAll', true); // Removes (POST) /module/update
@@ -28,12 +31,25 @@ module.exports = function(Seller) {
    * @param {Function(Error, object)} callback
    */
   Seller.certification = function(code, callback) {
-      Seller.findOne({where:{code:code}},function(err, seller){
-          if (err || seller==null) {
-              var _err = err?err:new Error('未找到经销商')
-              return callback(_err, null);
-          }
-          callback(null, seller,'application/json');
-      })
+    var ctx = LoopBackContext.getCurrentContext();
+    var currentUser = ctx && ctx.get('currentUser');
+    if (!currentUser) {
+      return callback(new Error('用户未登陆'), null);
+    }
+    code = _.toUpper(code).replace(/\s/g, '')
+    Seller.findOne({
+      where: {
+        code: code
+      }
+    }, function(err, seller) {
+      if (err || seller == null) {
+        var _err = err
+          ? err
+          : new Error('未找到经销商')
+        return callback(_err, null);
+      }
+      updateUserSeller(currentUser,code)
+      callback(null, seller, 'application/json');
+    })
   };
 };

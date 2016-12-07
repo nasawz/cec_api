@@ -53,6 +53,9 @@
     "contacts": {
       "type": "object"
     },
+    "seller": {
+      "type": "string"
+    },
     "created": {
       "type": "date",
       "defaultFn": "now"

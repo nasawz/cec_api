@@ -29,6 +29,18 @@ function updateUserContacts(user, contacts) {
   user.updateAttributes({contacts: _contacts})
 }
 
+
+/**
+ * updateUserSeller - 标示这个用户为经销商
+ *
+ * @param  {type} user description
+ * @param  {type} code description
+ * @return {type}      description
+ */
+function updateUserSeller(user, code) {
+  user.updateAttributes({seller: code})
+}
+
 /**
  * userLottery - 抽奖
  *
@@ -118,3 +130,4 @@ module.exports.updateUserContacts = updateUserContacts
 module.exports.userLottery = userLottery
 module.exports.costPrize = costPrize
 module.exports.recordLotteryHistory = recordLotteryHistory
+module.exports.updateUserSeller = updateUserSeller

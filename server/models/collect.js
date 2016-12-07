@@ -170,7 +170,7 @@ module.exports = function(Collect) {
           : new Error('未找到活动')
         return callback(_err, null);
       }
-      if (collect.supports.length < 5) {
+      if (!collect.supports || collect.supports.length < 5) {
         return callback(new Error('客户参与条件未达成'), null);
       }
       if (collect.status == '1') {
