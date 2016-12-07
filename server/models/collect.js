@@ -43,23 +43,23 @@ module.exports = function(Collect) {
       where: {
         id: cid
       }
-    }, function(err, collent) {
-      if (err || collent == null) {
+    }, function(err, collect) {
+      if (err || collect == null) {
         var _err = err
           ? err
           : new Error('未找到活动')
         return callback(_err, null);
       }
-      if (collent.supports.length < 5) {
+      if (collect.supports.length < 5) {
         return callback(new Error('参与条件未达成'), null);
       }
-      if (collent.ownerId.toString() != currentUser.id.toString()) {
+      if (collect.ownerId.toString() != currentUser.id.toString()) {
         return callback(new Error('不是自己发起的活动'), null);
       }
-      if (collent.status == '3') {
-        return callback(new Error('用户已抽奖'), null);
+      if (collect.status == '3') {
+        return callback(new Error('您已抽奖'), null);
       }
-      if (collent.status != '2') {
+      if (collect.status != '2') {
         return callback(new Error('用户未留资'), null);
       }
       userLottery(currentUser, aid, function(err, prize) {
@@ -73,20 +73,22 @@ module.exports = function(Collect) {
           if (result) {
             var _prize = prize
               ? {
-                name: prize.name
+                name: prize.name,
+                code: prize.code
               }
               : {
-                name: '未中奖'
+                name: '未中奖',
+                code: 'end'
               }
-            collent.updateAttributes({
+            collect.updateAttributes({
               prize: _prize,
               status: '3'
-            }, function(err, _collent) {
+            }, function(err, _collect) {
               if (err) {
                 return callback(err, null);
               }
               recordLotteryHistory(aid, currentUser, prize)
-              return callback(null, _collent, 'application/json');
+              return callback(null, _collect, 'application/json');
             })
           }
         })
@@ -109,14 +111,14 @@ module.exports = function(Collect) {
       where: {
         id: cid
       }
-    }, function(err, collent) {
-      if (err || collent == null) {
+    }, function(err, collect) {
+      if (err || collect == null) {
         var _err = err
           ? err
           : new Error('未找到活动')
         return callback(_err, null);
       }
-      if (collent.ownerId.toString() == currentUser.id.toString()) {
+      if (collect.ownerId.toString() == currentUser.id.toString()) {
         return callback(new Error('邀请好友来帮忙吧'), null);
       }
       data.user = {
@@ -127,8 +129,8 @@ module.exports = function(Collect) {
       }
       data.openid = currentUser.openid
       data.created = new Date()
-      var supports = collent.supports
-        ? collent.supports
+      var supports = collect.supports
+        ? collect.supports
         : []
       if (supports.length >= 5) {
         return callback(new Error('好友已经达成条件了'), null);
@@ -138,13 +140,13 @@ module.exports = function(Collect) {
         return callback(new Error('你已经帮助过了'), null);
       }
       supports.push(data)
-      collent.updateAttributes({
+      collect.updateAttributes({
         supports: supports
-      }, function(err, _collent) {
+      }, function(err, _collect) {
         if (err) {
           return callback(err, null);
         }
-        return callback(null, _collent, 'application/json');
+        return callback(null, _collect, 'application/json');
       })
     })
   };
@@ -161,23 +163,23 @@ module.exports = function(Collect) {
       where: {
         id: cid
       }
-    }, function(err, collent) {
-      if (err || collent == null) {
+    }, function(err, collect) {
+      if (err || collect == null) {
         var _err = err
           ? err
           : new Error('未找到活动')
         return callback(_err, null);
       }
-      if (collent.supports.length < 5) {
+      if (collect.supports.length < 5) {
         return callback(new Error('客户参与条件未达成'), null);
       }
-      if (collent.status == '1') {
+      if (collect.status == '1') {
         return callback(new Error('客户已点亮圣诞树'), null);
       }
-      if (collent.status == '2') {
+      if (collect.status == '2') {
         return callback(new Error('客户已点亮圣诞树'), null); //已经留资
       }
-      if (collent.status == '3') {
+      if (collect.status == '3') {
         return callback(new Error('客户已抽奖'), null);
       }
       Seller.findOne({
@@ -192,15 +194,15 @@ module.exports = function(Collect) {
           return callback(_err, null);
         }
         seller.permitAt = new Date()
-        collent.updateAttributes({
+        collect.updateAttributes({
           seller: seller,
           status: '1',
           code: code
-        }, function(err, _collent) {
+        }, function(err, _collect) {
           if (err) {
             return callback(err, null);
           }
-          return callback(null, _collent, 'application/json');
+          return callback(null, _collect, 'application/json');
         })
       })
     })
@@ -223,34 +225,34 @@ module.exports = function(Collect) {
       where: {
         id: cid
       }
-    }, function(err, collent) {
-      if (err || collent == null) {
+    }, function(err, collect) {
+      if (err || collect == null) {
         var _err = err
           ? err
           : new Error('未找到活动')
         return callback(_err, null);
       }
-      if (collent.supports.length < 5) {
+      if (collect.supports.length < 5) {
         return callback(new Error('参与条件未达成'), null);
       }
-      if (collent.ownerId.toString() != currentUser.id.toString()) {
+      if (collect.ownerId.toString() != currentUser.id.toString()) {
         return callback(new Error('不是自己发起的活动'), null);
       }
-      if (collent.status == '2') {
+      if (collect.status == '2') {
         return callback(new Error('用户已留资'), null);
       }
-      if (collent.status != '1') {
+      if (collect.status != '1') {
         return callback(new Error('未点亮圣诞树'), null);
       }
-      collent.updateAttributes({
+      collect.updateAttributes({
         contacts: data,
         status: '2'
-      }, function(err, _collent) {
+      }, function(err, _collect) {
         if (err) {
           return callback(err, null);
         }
         updateUserContacts(currentUser, data)
-        return callback(null, _collent, 'application/json');
+        return callback(null, _collect, 'application/json');
       })
     })
   };
