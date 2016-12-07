@@ -10,7 +10,8 @@ module.exports = function(app) {
    * 创建默认租户和管理员
    */
   // Tenant.create({
-  //   name: 'ftms'
+  //   name: 'ftms',
+  //   ename: 'ftms'
   // }, function(err, tenant) {
   //   console.log(err, tenant);
   //
@@ -55,7 +56,7 @@ module.exports = function(app) {
    * 经销商数据
    */
   // var Seller = app.models.seller;
-  // var tenantId = '583554ac08da54fe763c1499'
+  // var tenantId = '5847835e056bb4263dd1b767'
   // Tenant.findOne({
   //   id: tenantId
   // }, function(err, tenant) {
@@ -90,18 +91,18 @@ module.exports = function(app) {
    * 创建活动
    */
   // var Activity = app.models.activity;
-  // var tenantId = '583554ac08da54fe763c1499'
+  // var tenantId = '5847835e056bb4263dd1b767'
   // Tenant.findOne({
   //   id: tenantId
   // }, function(err, tenant) {
   //   Activity.create({
-  //     title: '圣诞树',
-  //     desc: '点亮圣诞树抽奖',
+  //     title: '圣诞倒计时！《妆点圣诞，温暖一冬》活动暖心来袭！',
+  //     desc: '快来装饰圣诞树赢取大奖吧！',
   //     share: {
-  //       title: '圣诞树',
-  //       desc: '点亮圣诞树抽奖',
+  //       title: '圣诞倒计时！《妆点圣诞，温暖一冬》活动暖心来袭！',
+  //       desc: '快来装饰圣诞树赢取大奖吧！',
   //       url: '',
-  //       img: ''
+  //       img: 'http://ces00.b0.upaiyun.com/2016/12/07/upload_8310b8fd0ebf2d96d026449cd91b2ec6.jpg'
   //     },
   //     type: 'collect',
   //     tenant: tenant
@@ -114,9 +115,9 @@ module.exports = function(app) {
    * 增加礼品
    */
   // var Activity = app.models.activity;
-  // var activityId = '583558bbdd516b9582543948'
+  // var activityId = '584783b26398be8b3d7bb3c4'
   // var Lottery = app.models.lottery;
-  // var tenantId = '583554ac08da54fe763c1499'
+  // var tenantId = '5847835e056bb4263dd1b767'
   // Tenant.findOne({
   //   id: tenantId
   // }, function(err, tenant) {

@@ -1,8 +1,17 @@
 {
-  "db": {
+  "db2": {
     "host": "127.0.0.1",
     "port": 27017,
     "database": "cec_db",
+    "name": "db2",
+    "connector": "mongodb"
+  },
+  "db": {
+    "host": "118.244.237.2",
+    "port": 27001,
+    "database": "cec_db",
+    "username": "cec_user",
+    "password": "<KI('UHG",
     "name": "db",
     "connector": "mongodb"
   }
