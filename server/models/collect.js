@@ -139,6 +139,11 @@ module.exports = function(Collect) {
       if (_.has(_supports, data.openid)) {
         return callback(new Error('你已经帮助过了'), null);
       }
+      var _tps = _.keyBy(supports, 'tp')
+      if (_.has(_tps, data.tp)) {
+        return callback(new Error('这里礼品已经送过了'), null);
+      }
+
       supports.push(data)
       collect.updateAttributes({
         supports: supports
@@ -232,7 +237,7 @@ module.exports = function(Collect) {
           : new Error('未找到活动')
         return callback(_err, null);
       }
-      if (collect.supports.length < 5) {
+      if (!collect.supports || collect.supports.length < 5) {
         return callback(new Error('参与条件未达成'), null);
       }
       if (collect.ownerId.toString() != currentUser.id.toString()) {
