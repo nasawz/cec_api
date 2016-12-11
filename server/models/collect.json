@@ -101,7 +101,14 @@
   "methods": {
     "status": {
       "isStatic": true,
-      "accepts": [],
+      "accepts": [
+        {
+          "arg": "date",
+          "type": "string",
+          "required": true,
+          "description": "date"
+        }
+    ],
       "returns": [
         {
           "arg": "obj",

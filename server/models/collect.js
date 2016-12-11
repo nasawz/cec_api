@@ -330,7 +330,7 @@ module.exports = function(Collect) {
  * 状态
  * @param {Function(Error, object)} callback
  */
-  Collect.status = function(callback) {
+  Collect.status = function(date, callback) {
     var ep = EventProxy.create("users", "collects", function(users, collects) {
       let obj = {}
       obj.total = getStatusNum(collects, users, true)
@@ -339,36 +339,121 @@ module.exports = function(Collect) {
     });
 
     function aysDetail(collects, users) {
-      let _users = users.map((item) => {
-        item.dd = item.created.Format("yyyy-MM-dd")
-        return item
+      var c_d = {}
+      var u_d = {}
+      var arr = [
+        [
+          ' 00:00', ' 01:00'
+        ],
+        [
+          ' 01:00', ' 02:00'
+        ],
+        [
+          ' 02:00', ' 03:00'
+        ],
+        [
+          ' 03:00', ' 04:00'
+        ],
+        [
+          ' 04:00', ' 05:00'
+        ],
+        [
+          ' 05:00', ' 06:00'
+        ],
+        [
+          ' 06:00', ' 07:00'
+        ],
+        [
+          ' 07:00', ' 08:00'
+        ],
+        [
+          ' 08:00', ' 09:00'
+        ],
+        [
+          ' 09:00', ' 10:00'
+        ],
+        [
+          ' 10:00', ' 11:00'
+        ],
+        [
+          ' 11:00', ' 12:00'
+        ],
+        [
+          ' 12:00', ' 13:00'
+        ],
+        [
+          ' 13:00', ' 14:00'
+        ],
+        [
+          ' 14:00', ' 15:00'
+        ],
+        [
+          ' 15:00', ' 16:00'
+        ],
+        [
+          ' 16:00', ' 17:00'
+        ],
+        [
+          ' 17:00', ' 18:00'
+        ],
+        [
+          ' 18:00', ' 19:00'
+        ],
+        [
+          ' 19:00', ' 20:00'
+        ],
+        [
+          ' 20:00', ' 21:00'
+        ],
+        [
+          ' 21:00', ' 22:00'
+        ],
+        [
+          ' 22:00', ' 23:00'
+        ],
+        [' 23:00', ' 24:00']
+      ];
+
+      collects.map((item) => {
+        for (var i = 0; i < 24; i++) {
+          if (item.created > new Date(date + arr[i][0]) && item.created <= new Date(date + arr[i][1])) {
+            if (c_d[i.toString()]) {
+              c_d[i.toString()]++
+            } else {
+              c_d[i.toString()] = 1
+            }
+          }
+        }
       })
-      let _collects = collects.map((item) => {
-        item.dd = item.created.Format("yyyy-MM-dd")
-        return item
+      users.map((item) => {
+        for (var i = 0; i < 24; i++) {
+          if (item.created > new Date(date + arr[i][0]) && item.created <= new Date(date + arr[i][1])) {
+            if (u_d[i.toString()]) {
+              u_d[i.toString()]++
+            } else {
+              u_d[i.toString()] = 1
+            }
+          }
+        }
       })
-      let _usersObj = _.groupBy(_users, 'dd');
-      let _collectsObj = _.groupBy(_collects, 'dd');
-      let details = {}
-      _.keys(_collectsObj).map((item) => {
-        let _us = _.has(_usersObj, item)
-          ? _usersObj[item]
-          : []
-        let _cs = _.has(_collectsObj, item)
-          ? _collectsObj[item]
-          : []
-        details[item] = getStatusNum(_cs, _us, false)
-      })
-      return details
+      return {c_d: c_d, u_d: u_d}
     }
 
-    function getAllUser() {
+    function getAllUser(date) {
       var User = Collect.app.models.user;
       User.find({
         where: {
-          created: {
-            gt: new Date('2016-12-8')
-          }
+          and: [
+            {
+              created: {
+                gt: new Date(date + ' 00:00')
+              }
+            }, {
+              created: {
+                lt: new Date(date + ' 23:59')
+              }
+            }
+          ]
         }
       }, (err, users) => {
         if (err) {
@@ -378,8 +463,22 @@ module.exports = function(Collect) {
       })
     }
 
-    function getAllCollect() {
-      Collect.find({}, (err, collects) => {
+    function getAllCollect(date) {
+      Collect.find({
+        where: {
+          and: [
+            {
+              created: {
+                gt: new Date(date + ' 00:00')
+              }
+            }, {
+              created: {
+                lt: new Date(date + ' 23:59')
+              }
+            }
+          ]
+        }
+      }, (err, collects) => {
         if (err) {
           return callback(err, null);
         }
@@ -432,8 +531,8 @@ module.exports = function(Collect) {
 
     }
 
-    getAllCollect()
-    getAllUser()
+    getAllCollect(date)
+    getAllUser(date)
 
   };
 
