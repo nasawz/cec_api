@@ -54,236 +54,203 @@
       "foreignKey": ""
     }
   },
-  "acls": [
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "DENY",
-      "property": "contacts"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW",
-      "property": "findById"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "$authenticated",
-      "permission": "ALLOW",
-      "property": "join"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "$authenticated",
-      "permission": "ALLOW",
-      "property": "contacts"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW",
-      "property": "permit"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "$authenticated",
-      "permission": "ALLOW",
-      "property": "support"
-    }
-  ],
+  "acls": [{
+    "accessType": "EXECUTE",
+    "principalType": "ROLE",
+    "principalId": "$everyone",
+    "permission": "DENY",
+    "property": "contacts"
+  }, {
+    "accessType": "EXECUTE",
+    "principalType": "ROLE",
+    "principalId": "$everyone",
+    "permission": "ALLOW",
+    "property": "findById"
+  }, {
+    "accessType": "EXECUTE",
+    "principalType": "ROLE",
+    "principalId": "$authenticated",
+    "permission": "ALLOW",
+    "property": "join"
+  }, {
+    "accessType": "EXECUTE",
+    "principalType": "ROLE",
+    "principalId": "$authenticated",
+    "permission": "ALLOW",
+    "property": "contacts"
+  }, {
+    "accessType": "EXECUTE",
+    "principalType": "ROLE",
+    "principalId": "$everyone",
+    "permission": "ALLOW",
+    "property": "permit"
+  }, {
+    "accessType": "EXECUTE",
+    "principalType": "ROLE",
+    "principalId": "$authenticated",
+    "permission": "ALLOW",
+    "property": "support"
+  }],
   "methods": {
     "status": {
       "isStatic": true,
-      "accepts": [
-        {
-          "arg": "date",
-          "type": "string",
-          "required": true,
-          "description": "date"
-        }
-    ],
-      "returns": [
-        {
-          "arg": "obj",
-          "type": "object",
-          "root": true,
-          "description": ""
-        }
-      ],
+      "accepts": [{
+        "arg": "date",
+        "type": "string",
+        "required": true,
+        "description": "date"
+      }],
+      "returns": [{
+        "arg": "obj",
+        "type": "object",
+        "root": true,
+        "description": ""
+      }],
       "description": "概况",
-      "http": [
-        {
-          "path": "/status",
-          "verb": "get"
-        }
-      ]
+      "http": [{
+        "path": "/status",
+        "verb": "get"
+      }]
     },
     "lottery": {
       "isStatic": true,
-      "accepts": [
-        {
-          "arg": "cid",
-          "type": "string",
-          "required": true,
-          "description": "collect id"
-        },
-        {
-          "arg": "aid",
-          "type": "string",
-          "required": true,
-          "description": "activity id"
-        }
-      ],
-      "returns": [
-        {
-          "arg": "result",
-          "type": "object",
-          "root": true,
-          "description": ""
-        }
-      ],
+      "accepts": [{
+        "arg": "cid",
+        "type": "string",
+        "required": true,
+        "description": "collect id"
+      }, {
+        "arg": "aid",
+        "type": "string",
+        "required": true,
+        "description": "activity id"
+      }],
+      "returns": [{
+        "arg": "result",
+        "type": "object",
+        "root": true,
+        "description": ""
+      }],
       "description": "当前登录的所有者抽奖",
-      "http": [
-        {
-          "path": "/lottery",
-          "verb": "post"
-        }
-      ]
+      "http": [{
+        "path": "/lottery",
+        "verb": "post"
+      }]
     },
     "support": {
       "isStatic": true,
-      "accepts": [
-        {
-          "arg": "cid",
-          "type": "string",
-          "required": true,
-          "description": "collect id"
-        },
-        {
-          "arg": "data",
-          "type": "object",
-          "required": true,
-          "description": ""
-        }
-      ],
-      "returns": [
-        {
-          "arg": "result",
-          "type": "object",
-          "root": true,
-          "description": ""
-        }
-      ],
+      "accepts": [{
+        "arg": "cid",
+        "type": "string",
+        "required": true,
+        "description": "collect id"
+      }, {
+        "arg": "data",
+        "type": "object",
+        "required": true,
+        "description": ""
+      }],
+      "returns": [{
+        "arg": "result",
+        "type": "object",
+        "root": true,
+        "description": ""
+      }],
       "description": "支持",
-      "http": [
-        {
-          "path": "/support",
-          "verb": "post"
-        }
-      ]
+      "http": [{
+        "path": "/support",
+        "verb": "post"
+      }]
     },
     "permit": {
       "isStatic": true,
-      "accepts": [
-        {
-          "arg": "cid",
-          "type": "string",
-          "required": true,
-          "description": "collect id"
-        },
-        {
-          "arg": "code",
-          "type": "string",
-          "required": true,
-          "description": "经销店编码"
-        }
-      ],
-      "returns": [
-        {
-          "arg": "result",
-          "type": "object",
-          "root": true,
-          "description": ""
-        }
-      ],
+      "accepts": [{
+        "arg": "cid",
+        "type": "string",
+        "required": true,
+        "description": "collect id"
+      }, {
+        "arg": "code",
+        "type": "string",
+        "required": true,
+        "description": "经销店编码"
+      }],
+      "returns": [{
+        "arg": "result",
+        "type": "object",
+        "root": true,
+        "description": ""
+      }],
       "description": "允许",
-      "http": [
-        {
-          "path": "/permit",
-          "verb": "post"
-        }
-      ]
+      "http": [{
+        "path": "/permit",
+        "verb": "post"
+      }]
     },
     "contacts": {
       "isStatic": true,
-      "accepts": [
-        {
-          "arg": "cid",
-          "type": "string",
-          "required": true,
-          "description": "collect id"
-        },
-        {
-          "arg": "data",
-          "type": "object",
-          "required": true,
-          "description": "联系人数据"
-        }
-      ],
-      "returns": [
-        {
-          "arg": "result",
-          "type": "object",
-          "root": true,
-          "description": ""
-        }
-      ],
+      "accepts": [{
+        "arg": "cid",
+        "type": "string",
+        "required": true,
+        "description": "collect id"
+      }, {
+        "arg": "data",
+        "type": "object",
+        "required": true,
+        "description": "联系人数据"
+      }],
+      "returns": [{
+        "arg": "result",
+        "type": "object",
+        "root": true,
+        "description": ""
+      }],
       "description": "当前登录用户留资",
-      "http": [
-        {
-          "path": "/contacts",
-          "verb": "post"
-        }
-      ]
+      "http": [{
+        "path": "/contacts",
+        "verb": "post"
+      }]
     },
     "join": {
       "isStatic": true,
-      "accepts": [
-        {
-          "arg": "channel",
-          "type": "string",
-          "required": false,
-          "description": "渠道"
-        },
-        {
-          "arg": "activityId",
-          "type": "string",
-          "required": true,
-          "description": "活动"
-        }
-      ],
-      "returns": [
-        {
-          "arg": "result",
-          "type": "object",
-          "root": true,
-          "description": ""
-        }
-      ],
+      "accepts": [{
+        "arg": "channel",
+        "type": "string",
+        "required": false,
+        "description": "渠道"
+      }, {
+        "arg": "activityId",
+        "type": "string",
+        "required": true,
+        "description": "活动"
+      }],
+      "returns": [{
+        "arg": "result",
+        "type": "object",
+        "root": true,
+        "description": ""
+      }],
       "description": "参与",
-      "http": [
-        {
-          "path": "/join",
-          "verb": "post"
-        }
-      ]
+      "http": [{
+        "path": "/join",
+        "verb": "post"
+      }]
+    },
+    "contactslist": {
+      "isStatic": true,
+      "accepts": [],
+      "returns": [{
+        "arg": "obj",
+        "type": "object",
+        "root": true,
+        "description": ""
+      }],
+      "description": "留资数据",
+      "http": [{
+        "path": "/contactslist",
+        "verb": "get"
+      }]
     }
   }
 }

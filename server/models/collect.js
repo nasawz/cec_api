@@ -535,5 +535,35 @@ module.exports = function(Collect) {
     getAllUser(date)
 
   };
+  /**
+ * 留资数据
+ * @param {Function(Error, object)} callback
+ */
 
+  Collect.contactslist = function(callback) {
+    var ep = EventProxy.create("collects", function(collects) {
+      var contacts = collects.map((item) => {
+        item.contacts.time = item.created.Format("yyyy-MM-dd")
+        return item.contacts
+      })
+      callback(null, contacts);
+    });
+    function getAllCollect() {
+      Collect.find({
+        where: {
+          contacts: {
+            neq: null
+          }
+        }
+      }, (err, collects) => {
+        if (err) {
+          return callback(err, null);
+        }
+        console.log(collects);
+        ep.emit("collects", collects);
+      })
+    }
+    getAllCollect()
+
+  };
 };
