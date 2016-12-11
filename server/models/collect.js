@@ -6,6 +6,26 @@ var updateUserContacts = require('./helper/').updateUserContacts
 var userLottery = require('./helper/').userLottery
 var costPrize = require('./helper/').costPrize
 var recordLotteryHistory = require('./helper/').recordLotteryHistory
+var EventProxy = require('eventproxy');
+Date.prototype.Format = function(fmt) { //author: meizz
+  var o = {
+    "M+": this.getMonth() + 1, //月份
+    "d+": this.getDate(), //日
+    "h+": this.getHours(), //小时
+    "m+": this.getMinutes(), //分
+    "s+": this.getSeconds(), //秒
+    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+    "S": this.getMilliseconds() //毫秒
+  };
+  if (/(y+)/.test(fmt))
+    fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt))
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1)
+        ? (o[k])
+        : (("00" + o[k]).substr(("" + o[k]).length)));
+  return fmt;
+}
 // var app = require('../../server/server');
 module.exports = function(Collect) {
   Collect.disableRemoteMethod('create', true); // Removes (POST) /module
@@ -74,11 +94,13 @@ module.exports = function(Collect) {
             var _prize = prize
               ? {
                 name: prize.name,
-                code: prize.code
+                code: prize.code,
+                time: new Date()
               }
               : {
                 name: '未中奖',
-                code: 'end'
+                code: 'end',
+                time: new Date()
               }
             collect.updateAttributes({
               prize: _prize,
@@ -302,6 +324,117 @@ module.exports = function(Collect) {
         callback(null, collect, 'application/json');
       })
     })
+  };
+
+  /**
+ * 状态
+ * @param {Function(Error, object)} callback
+ */
+  Collect.status = function(callback) {
+    var ep = EventProxy.create("users", "collects", function(users, collects) {
+      let obj = {}
+      obj.total = getStatusNum(collects, users, true)
+      obj.details = aysDetail(collects, users)
+      callback(null, obj);
+    });
+
+    function aysDetail(collects, users) {
+      let _users = users.map((item) => {
+        item.dd = item.created.Format("yyyy-MM-dd")
+        return item
+      })
+      let _collects = collects.map((item) => {
+        item.dd = item.created.Format("yyyy-MM-dd")
+        return item
+      })
+      let _usersObj = _.groupBy(_users, 'dd');
+      let _collectsObj = _.groupBy(_collects, 'dd');
+      let details = {}
+      _.keys(_collectsObj).map((item) => {
+        let _us = _.has(_usersObj, item)
+          ? _usersObj[item]
+          : []
+        let _cs = _.has(_collectsObj, item)
+          ? _collectsObj[item]
+          : []
+        details[item] = getStatusNum(_cs, _us, false)
+      })
+      return details
+    }
+
+    function getAllUser() {
+      var User = Collect.app.models.user;
+      User.find({
+        where: {
+          created: {
+            gt: new Date('2016-12-8')
+          }
+        }
+      }, (err, users) => {
+        if (err) {
+          return callback(err, null);
+        }
+        ep.emit("users", users);
+      })
+    }
+
+    function getAllCollect() {
+      Collect.find({}, (err, collects) => {
+        if (err) {
+          return callback(err, null);
+        }
+        ep.emit("collects", collects);
+      })
+    }
+
+    function getStatusNum(collects, users, raus) {
+
+      let createNum = collects.length
+      let joinNum = users.length
+      let completeNum = 0
+      let comeNum = 0
+      let awardNum = 0
+      let awardUsers = []
+      collects.map((item) => {
+        if (item.supports && item.supports.length == 5) {
+          completeNum++
+        }
+        if (_.indexOf([
+          '1', '2', '3'
+        ], item.status) > -1) {
+          comeNum++
+        }
+        if (item.prize && item.prize.name != '未中奖') {
+          let awardObj = _.merge(item.contacts, item.prize)
+          //   console.log(item.contacts, item.prize, awardObj);
+          if (awardObj.time) {
+            awardObj.dd = awardObj.time.Format("yyyy-MM-dd")
+          } else {
+            awardObj.dd = new Date().Format("yyyy-MM-dd")
+          }
+          delete awardObj.time
+          delete awardObj.code
+          awardUsers.push(awardObj)
+          awardNum++
+        }
+      })
+      if (raus) {
+        return {
+          completeNum: completeNum,
+          comeNum: comeNum,
+          awardNum: awardNum,
+          createNum: createNum,
+          joinNum: joinNum,
+          awardUsers: awardUsers
+        }
+      }
+      return {completeNum: completeNum, comeNum: comeNum, awardNum: awardNum, createNum: createNum, joinNum: joinNum}
+
+    }
+
+    getAllCollect()
+    getAllUser()
+
   };
 
 };

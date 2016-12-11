@@ -3,6 +3,7 @@
 var LoopBackContext = require('loopback-context');
 var _ = require('lodash');
 var updateUserSeller = require('./helper/').updateUserSeller
+var EventProxy = require('eventproxy');
 
 module.exports = function(Seller) {
   Seller.disableRemoteMethod('create', true); // Removes (POST) /module
@@ -48,8 +49,53 @@ module.exports = function(Seller) {
           : new Error('未找到经销商')
         return callback(_err, null);
       }
-      updateUserSeller(currentUser,code)
+      updateUserSeller(currentUser, code)
       callback(null, seller, 'application/json');
+    })
+  };
+
+  /**
+ * 概况
+ * @param {Function(Error, object)} callback
+ */
+
+  Seller.status = function(callback) {
+    var ep = EventProxy.create("sellers", "collects", function(sellers, collects) {
+
+      let s = sellers.map((seller) => {
+        if (collects[seller.code]) {
+          seller.num = collects[seller.code].length
+        } else {
+          seller.num = 0
+        }
+        return seller
+      })
+
+      callback(null, s);
+
+    });
+
+    var Collect = Seller.app.models.collect;
+    Collect.find({
+      where: {
+        status: {
+          inq: ['1', '2', '3']
+        }
+      }
+    }, (err, collects) => {
+      if (err) {
+        return callback(err, null);
+      }
+
+      let _collectsObj = _.groupBy(collects, 'code');
+
+      ep.emit("collects", _collectsObj);
+    })
+    Seller.find({}, (err, sellers) => {
+      if (err) {
+        return callback(err, null);
+      }
+      ep.emit("sellers", sellers);
     })
   };
 };

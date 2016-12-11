@@ -99,6 +99,25 @@
     }
   ],
   "methods": {
+    "status": {
+      "isStatic": true,
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "obj",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "概况",
+      "http": [
+        {
+          "path": "/status",
+          "verb": "get"
+        }
+      ]
+    },
     "lottery": {
       "isStatic": true,
       "accepts": [
