@@ -2,7 +2,7 @@
 
 var request = require('superagent')
 
-module.exports = function(User) {
+module.exports = function (User) {
   User.disableRemoteMethod('create', true);
   User.disableRemoteMethod('upsert', true);
   User.disableRemoteMethod('updateAll', true);
@@ -41,7 +41,7 @@ module.exports = function(User) {
    * @param {string} access_token
    * @param {Function(Error, object)} callback
    */
-  User.info = function(access_token, callback) {
+  User.info = function (access_token, callback) {
 
     // Report.findById({
     //   id: 1,
@@ -80,11 +80,11 @@ module.exports = function(User) {
    * @param {string} openid
    * @param {Function(Error, object)} callback
    */
-  User.auth = function(access_token, openid, tenantId, callback) {
+  User.auth = function (access_token, openid, tenantId, callback) {
     var Tenant = User.app.models.tenant;
     Tenant.findOne({
       id: tenantId
-    }, function(err, tenant) {
+    }, function (err, tenant) {
       if (err) {
         return callback(err, null);
       }
@@ -99,14 +99,14 @@ module.exports = function(User) {
             email: u.email,
             password: u.openid,
             ttl: TWO_WEEKS
-          }, 'user', function(err, accessToken) {
+          }, 'user', function (err, accessToken) {
             if (err) {
               return callback(err, null);
             }
             return callback(null, accessToken, 'application/json');
           });
         } else {
-          var req = request.get("http://auth.vkeve.com/userinfo?access_token=" + access_token + "&openid=" + openid)
+          var req = request.get("http://cod.baleina.cn/userinfo?access_token=" + access_token + "&openid=" + openid)
           req.timeout(100000)
           req.end((err, res) => {
             if (err) {
@@ -126,7 +126,7 @@ module.exports = function(User) {
                 email: u.email,
                 password: u.openid,
                 ttl: TWO_WEEKS
-              }, 'user', function(err, accessToken) {
+              }, 'user', function (err, accessToken) {
                 if (err) {
                   return callback(err, null);
                 }

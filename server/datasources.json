@@ -1,10 +1,10 @@
 {
   "db": {
-    "host": "118.244.237.2",
-    "port": 27001,
-    "database": "cec_db",
-    "username": "cec_user",
-    "password": "<KI('UHG",
+    "host": "localhost",
+    "port": 27017,
+    "database": "xmas_db",
+    "username": "xmas_user",
+    "password": "xmasatdocker",
     "name": "db",
     "connector": "mongodb"
   }

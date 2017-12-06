@@ -7,7 +7,7 @@ var userLottery = require('./helper/').userLottery
 var costPrize = require('./helper/').costPrize
 var recordLotteryHistory = require('./helper/').recordLotteryHistory
 var EventProxy = require('eventproxy');
-Date.prototype.Format = function(fmt) { //author: meizz
+Date.prototype.Format = function (fmt) { //author: meizz
   var o = {
     "M+": this.getMonth() + 1, //月份
     "d+": this.getDate(), //日
@@ -27,7 +27,7 @@ Date.prototype.Format = function(fmt) { //author: meizz
   return fmt;
 }
 // var app = require('../../server/server');
-module.exports = function(Collect) {
+module.exports = function (Collect) {
   Collect.disableRemoteMethod('create', true); // Removes (POST) /module
 
   Collect.disableRemoteMethod('find', true);
@@ -53,7 +53,7 @@ module.exports = function(Collect) {
    * @param {string} cid collect id
    * @param {Function(Error, object)} callback
    */
-  Collect.lottery = function(cid, aid, callback) {
+  Collect.lottery = function (cid, aid, callback) {
     var ctx = LoopBackContext.getCurrentContext();
     var currentUser = ctx && ctx.get('currentUser');
     if (!currentUser) {
@@ -63,7 +63,7 @@ module.exports = function(Collect) {
       where: {
         id: cid
       }
-    }, function(err, collect) {
+    }, function (err, collect) {
       if (err || collect == null) {
         var _err = err
           ? err
@@ -82,11 +82,11 @@ module.exports = function(Collect) {
       if (collect.status != '2') {
         return callback(new Error('用户未留资'), null);
       }
-      userLottery(currentUser, aid, function(err, prize) {
+      userLottery(currentUser, aid, function (err, prize) {
         if (err) {
           return callback(err, null);
         }
-        costPrize(currentUser, aid, prize, function(err, result) {
+        costPrize(currentUser, aid, prize, function (err, result) {
           if (err) {
             return callback(err, null);
           }
@@ -105,7 +105,7 @@ module.exports = function(Collect) {
             collect.updateAttributes({
               prize: _prize,
               status: '3'
-            }, function(err, _collect) {
+            }, function (err, _collect) {
               if (err) {
                 return callback(err, null);
               }
@@ -123,7 +123,7 @@ module.exports = function(Collect) {
    * @param {string} cid collect id
    * @param {Function(Error, object)} callback
    */
-  Collect.support = function(cid, data, callback) {
+  Collect.support = function (cid, data, callback) {
     var ctx = LoopBackContext.getCurrentContext();
     var currentUser = ctx && ctx.get('currentUser');
     if (!currentUser) {
@@ -133,7 +133,7 @@ module.exports = function(Collect) {
       where: {
         id: cid
       }
-    }, function(err, collect) {
+    }, function (err, collect) {
       if (err || collect == null) {
         var _err = err
           ? err
@@ -169,7 +169,7 @@ module.exports = function(Collect) {
       supports.push(data)
       collect.updateAttributes({
         supports: supports
-      }, function(err, _collect) {
+      }, function (err, _collect) {
         if (err) {
           return callback(err, null);
         }
@@ -184,13 +184,13 @@ module.exports = function(Collect) {
    * @param {string} code 经销店编码
    * @param {Function(Error, object)} callback
    */
-  Collect.permit = function(cid, code, callback) {
+  Collect.permit = function (cid, code, callback) {
     var Seller = Collect.app.models.seller;
     Collect.findOne({
       where: {
         id: cid
       }
-    }, function(err, collect) {
+    }, function (err, collect) {
       if (err || collect == null) {
         var _err = err
           ? err
@@ -213,7 +213,7 @@ module.exports = function(Collect) {
         where: {
           code: code
         }
-      }, function(err, seller) {
+      }, function (err, seller) {
         if (err || seller == null) {
           var _err = err
             ? err
@@ -225,7 +225,7 @@ module.exports = function(Collect) {
           seller: seller,
           status: '1',
           code: code
-        }, function(err, _collect) {
+        }, function (err, _collect) {
           if (err) {
             return callback(err, null);
           }
@@ -241,7 +241,7 @@ module.exports = function(Collect) {
    * @param {object} data 联系人数据
    * @param {Function(Error, object)} callback
    */
-  Collect.contacts = function(cid, data, callback) {
+  Collect.contacts = function (cid, data, callback) {
     var ctx = LoopBackContext.getCurrentContext();
     var currentUser = ctx && ctx.get('currentUser');
     if (!currentUser) {
@@ -252,7 +252,7 @@ module.exports = function(Collect) {
       where: {
         id: cid
       }
-    }, function(err, collect) {
+    }, function (err, collect) {
       if (err || collect == null) {
         var _err = err
           ? err
@@ -274,7 +274,7 @@ module.exports = function(Collect) {
       collect.updateAttributes({
         contacts: data,
         status: '2'
-      }, function(err, _collect) {
+      }, function (err, _collect) {
         if (err) {
           return callback(err, null);
         }
@@ -289,7 +289,7 @@ module.exports = function(Collect) {
    * @param {string} channel 渠道
    * @param {Function(Error, object)} callback
    */
-  Collect.join = function(channel, activityId, callback) {
+  Collect.join = function (channel, activityId, callback) {
     var ctx = LoopBackContext.getCurrentContext();
     var currentUser = ctx && ctx.get('currentUser');
     if (!currentUser) {
@@ -300,7 +300,7 @@ module.exports = function(Collect) {
       where: {
         id: activityId
       }
-    }, function(err, activity) {
+    }, function (err, activity) {
       if (err || activity == null) {
         var _err = err
           ? err
@@ -312,17 +312,17 @@ module.exports = function(Collect) {
           ownerId: currentUser.id
         }
       }, {
-        owner: currentUser,
-        openid: currentUser.openid,
-        activity: activity,
-        channel: channel
-      }, function(err, collect) {
-        if (err) {
-          return callback(err, null);
-        }
-        updateUserChannel(currentUser, channel)
-        callback(null, collect, 'application/json');
-      })
+          owner: currentUser,
+          openid: currentUser.openid,
+          activity: activity,
+          channel: channel
+        }, function (err, collect) {
+          if (err) {
+            return callback(err, null);
+          }
+          updateUserChannel(currentUser, channel)
+          callback(null, collect, 'application/json');
+        })
     })
   };
 
@@ -330,8 +330,8 @@ module.exports = function(Collect) {
  * 状态
  * @param {Function(Error, object)} callback
  */
-  Collect.status = function(date, callback) {
-    var ep = EventProxy.create("users", "collects", function(users, collects) {
+  Collect.status = function (date, callback) {
+    var ep = EventProxy.create("users", "collects", function (users, collects) {
       let obj = {}
       obj.total = getStatusNum(collects, users, true)
       obj.details = aysDetail(collects, users)
@@ -436,7 +436,7 @@ module.exports = function(Collect) {
           }
         }
       })
-      return {c_d: c_d, u_d: u_d}
+      return { c_d: c_d, u_d: u_d }
     }
 
     function getAllUser(date) {
@@ -527,7 +527,7 @@ module.exports = function(Collect) {
           awardUsers: awardUsers
         }
       }
-      return {completeNum: completeNum, comeNum: comeNum, awardNum: awardNum, createNum: createNum, joinNum: joinNum}
+      return { completeNum: completeNum, comeNum: comeNum, awardNum: awardNum, createNum: createNum, joinNum: joinNum }
 
     }
 
@@ -540,8 +540,8 @@ module.exports = function(Collect) {
  * @param {Function(Error, object)} callback
  */
 
-  Collect.contactslist = function(callback) {
-    var ep = EventProxy.create("collects", function(collects) {
+  Collect.contactslist = function (callback) {
+    var ep = EventProxy.create("collects", function (collects) {
       var contacts = collects.map((item) => {
         item.contacts.time = item.created.Format("yyyy-MM-dd")
         return item.contacts
